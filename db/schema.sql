@@ -16,3 +16,9 @@ CREATE TABLE employees (
     manager_id INT,
     FOREIGN KEY (role_id) REFERENCES roles(id)
 );
+
+DROP USER IF EXISTS "employee"@"localhost";
+
+CREATE USER "employee"@"localhost";
+
+GRANT ALL ON company_db.* TO 'employee'@'localhost';

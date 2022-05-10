@@ -2,19 +2,23 @@ const mysql = require("mysql2");
 const inquirer = require("inquirer");
 // const schema = require("../db/schema.sql");
 // console.log(schema);
+let connection;
 
-const connection = mysql.createConnection({
+
+connection = mysql.createConnection({
     host: "localhost",
-    user: "root",
-    password: "password1"
+    user: "employee",
+    password: "",
+    database: "company_db"
 });
-connection.query('SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = "company_db"', (err, results) => {
-    if (!results[0]) {
-        throw "It seems you do not have a database set up. Please run schema.sql and seeds.sql";
-    } else {
-        connection.query("USE company_db");
-    }
-});
+
+// connection.query('SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = "company_db"', (err, results) => {
+//     if (!results[0]) {
+//         throw "It seems you do not have a database set up. Please run schema.sql and seeds.sql";
+//     } else {
+//         connection.query("USE company_db");
+//     }
+// });
 const mainOptions = [
     {
         type: "list",
@@ -24,14 +28,14 @@ const mainOptions = [
         name: "todo"
     }
 ];
-const viewAllEmps = (connection) => {
-    connection.query('SELECT * FROM example', (err, results) => {
+const viewAllEmps = () => {
+    connection.query("SELECT * FROM employees", (err, res) => {
         if (err) {
             console.error(err);
         } else {
-            console.log("Name")
+            console.log(res);
         }
-    })
+    });
 }
 
 connection.connect();
@@ -55,5 +59,8 @@ console.log(String.raw`
 inquirer.prompt(mainOptions)
 .then((choice) => {
         console.log(choice);
+        if (choice.todo === "View All Employees") {
+            viewAllEmps();
+        }
         connection.end();
     });
