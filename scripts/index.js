@@ -1,5 +1,6 @@
 const mysql = require("mysql2");
 const inquirer = require("inquirer");
+const queries = require("../helpers/quieries");
 // const schema = require("../db/schema.sql");
 // console.log(schema);
 let connection;
@@ -28,15 +29,6 @@ const mainOptions = [
         name: "todo"
     }
 ];
-const viewAllEmps = () => {
-    connection.query("SELECT * FROM employees", (err, res) => {
-        if (err) {
-            console.error(err);
-        } else {
-            console.log(res);
-        }
-    });
-}
 
 connection.connect();
 // connection.execute(`IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = "company")
@@ -60,7 +52,7 @@ inquirer.prompt(mainOptions)
 .then((choice) => {
         console.log(choice);
         if (choice.todo === "View All Employees") {
-            viewAllEmps();
+            queries.viewAllEmps(connection);
         }
         connection.end();
     });
