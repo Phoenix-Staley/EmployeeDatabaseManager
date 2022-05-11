@@ -1,4 +1,5 @@
 const { wait_to_resolve } = require("./quieries");
+const inquirer = require("inquirer");
 
 const add_employee = (connection) => {
     return new Promise((resolve, reject) => {
