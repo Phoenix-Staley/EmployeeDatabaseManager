@@ -20,7 +20,7 @@ connection = mysql.createConnection({
 //         connection.query("USE company_db");
 //     }
 // });
-const mainOptions = [
+const main_options = [
     {
         type: "list",
         message: "What would you like to do?",
@@ -48,11 +48,14 @@ console.log(String.raw`
                  |_|            |___/                                                       |___/           
 `);
 
-inquirer.prompt(mainOptions)
-.then((choice) => {
-        console.log(choice);
+function main() {
+    inquirer.prompt(main_options)
+    .then((choice) => {
         if (choice.todo === "View All Employees") {
-            queries.viewAllEmps(connection);
+            queries.view_all_emps(connection);
         }
         connection.end();
     });
+}
+
+main();
