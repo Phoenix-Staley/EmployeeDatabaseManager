@@ -12,7 +12,7 @@ VALUES ("Engineer", 1),
 ("Intern", 2);
 
 INSERT INTO employees (first_name, last_name, role_id, manager_id)
-VALUES ("Alex", "Garcia", 1, 3),
-("Sarah", "Brown", 1, 3),
-("Jordan", "Johnson", 2, NULL),
-("Robin", "Smith", 3, 2);
+VALUES ("Jordan", "Johnson", 2, NULL),
+("Alex", "Garcia", 1, 1),
+("Sarah", "Brown", 1, 1),
+("Robin", "Smith", 3, 3);
