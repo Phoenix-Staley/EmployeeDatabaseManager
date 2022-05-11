@@ -26,28 +26,6 @@ const view_all_emps = (connection) => {
             wait_to_resolve(resolve);
         });
     });
-    // connection.query(`SELECT employees.first_name AS first, employees.last_name AS last, roles.title AS role
-    //                 FROM employees JOIN roles
-    //                 ON employees.role_id = roles.id`, (err, res) => {
-    //     if (err) {
-    //         console.error(err);
-    //     } else {
-    //         console.log(res);
-    //     }
-    // });
-    // connection.query(`SELECT employees.first_name AS first, employees.last_name AS last, roles.title AS role,
-    //                     MAX(roles.title) AS longest
-    //                 FROM employees JOIN roles
-    //                 ON employees.role_id = roles.id
-    //                 GROUP BY employees.first_name, employees.last_name, roles.title`, (err, res) => {
-    //     if (err) {
-    //         console.error(err);
-    //     } else {
-    //         console.log(res);
-    //     }
-    // });
 }
 
-
-
-module.exports = { view_all_emps };
+module.exports = { view_all_emps, wait_to_resolve };

@@ -1,6 +1,7 @@
 const mysql = require("mysql2");
 const inquirer = require("inquirer");
 const queries = require("../helpers/quieries");
+const inserts = require("../helpers/inserts");
 // const schema = require("../db/schema.sql");
 // console.log(schema);
 let connection;
@@ -25,7 +26,7 @@ const main_options = [
         type: "list",
         message: "What would you like to do?",
         choices: ["View All Employees", "Add Employee", "Update Employee Role",
-        "View All Roles", "Add Role", "View All Departments", "Add Department"],
+        "View All Roles", "Add Role", "View All Departments", "Add Department", "Quit"],
         name: "todo"
     }
 ];
@@ -52,9 +53,15 @@ function main() {
     inquirer.prompt(main_options)
     .then((choice) => {
         if (choice.todo === "View All Employees") {
-            queries.view_all_emps(connection);
+            queries.view_all_emps(connection)
+            .then(res => main());
+        } else if (choice.todo === "Add Employee") {
+            inserts.add_employee(connection).catch(err => console.error(err))
+            .then(res => main());
+        } else if (choice.todo === "Quit") {
+            console.log("Goodbye");
+            connection.end();
         }
-        connection.end();
     });
 }
 
