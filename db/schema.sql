@@ -21,7 +21,8 @@ CREATE TABLE employees (
     last_name VARCHAR(63) NOT NULL,
     role_id INT,
     manager_id INT,
-    FOREIGN KEY (role_id) REFERENCES roles(id)
+    FOREIGN KEY (role_id) REFERENCES roles(id),
+    FOREIGN KEY (manager_id) REFERENCES employees(id)
 );
 
 DROP USER IF EXISTS "employee"@"localhost";
