@@ -1,6 +1,6 @@
 const mysql = require("mysql2");
 const inquirer = require("inquirer");
-const sql = require("../helpers");
+const sql = require("../utils");
 // const schema = require("../db/schema.sql");
 // console.log(schema);
 let connection;
