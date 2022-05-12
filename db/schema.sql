@@ -5,12 +5,12 @@ USE company_db;
 
 CREATE TABLE departments (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    dept_name VARCHAR(63) NOT NULL
+    dept_name VARCHAR(63) NOT NULL UNIQUE
 );
 
 CREATE TABLE roles (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    title VARCHAR(31) NOT NULL,
+    title VARCHAR(31) NOT NULL UNIQUE,
     salary INT NOT NULL,
     dept_id INT,
     FOREIGN KEY (dept_id) REFERENCES departments(id)

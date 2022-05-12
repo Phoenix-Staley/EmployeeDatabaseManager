@@ -13,7 +13,7 @@ const wait_to_resolve = (resolve) => {
 const view_all_emps = (connection) => {
     return new Promise((resolve, reject) => {
         connection.query(`SELECT employees.id AS ID, employees.first_name AS First, employees.last_name AS Last,
-        employees.manager_id AS Manager, roles.title AS Role, roles.salary AS Salary, departments.dept_name AS Department
+        employees.manager_id AS Manager_ID, roles.title AS Role, roles.salary AS Salary, departments.dept_name AS Department
         FROM employees
         INNER JOIN roles ON employees.role_id = roles.id
         INNER JOIN departments ON roles.dept_id = departments.id`, (err, res) => {
@@ -21,7 +21,7 @@ const view_all_emps = (connection) => {
                 reject(err);
             }
             console.log();
-            console.table(res, ["ID", "First", "Last", "Role", "Salary", "Department", "Manager"]);
+            console.table(res, ["ID", "First", "Last", "Role", "Salary", "Department", "Manager_ID"]);
             wait_to_resolve(resolve);
         });
     });
