@@ -5,7 +5,6 @@ const sql = require("./utils");
 // console.log(schema);
 let connection;
 
-
 connection = mysql.createConnection({
     host: "localhost",
     user: "employee",
@@ -53,31 +52,38 @@ function main() {
     .then((choice) => {
         if (choice.todo === "View All Employees") {
             sql.queries.view_all_emps(connection)
-            .then(res => main());
+            .then(res => main())
+            .catch(err => console.error("There's been an error:", err));
 
         } else if (choice.todo === "Add Employee") {
             sql.inserts.add_employee(connection).catch(err => console.error(err))
-            .then(res => main());
+            .then(res => main())
+            .catch(err => console.error("There's been an error:", err));
 
         } else if (choice.todo === "Update Employee Role") {
             sql.updates.update_role(connection)
-            .then(res => main());
+            .then(res => main())
+            .catch(err => console.error("There's been an error:", err));
 
         } else if (choice.todo === "View All Roles") {
             sql.queries.view_all_roles(connection)
-            .then(res => main());
+            .then(res => main())
+            .catch(err => console.error("There's been an error:", err));
 
         } else if (choice.todo === "Add Role") {
             sql.inserts.add_role(connection)
-            .then(res => main());
+            .then(res => main())
+            .catch(err => console.error("Error: make sure the role's name is unique."));
 
         } else if (choice.todo === "View All Departments") {
             sql.queries.view_all_departments(connection)
-            .then(res => main());
+            .then(res => main())
+            .catch(err => console.error("There's been an error:", err));
 
         } else if (choice.todo === "Add Department") {
             sql.inserts.add_department(connection)
-            .then(res => main());
+            .then(res => main())
+            .catch(err => console.error("Error: make sure the department's name is unique."));
 
         } else if (choice.todo === "Quit") {
             console.log("Goodbye");

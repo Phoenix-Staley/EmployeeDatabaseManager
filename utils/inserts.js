@@ -90,9 +90,11 @@ const add_role = (connection) => {
                 (err, result) => {
                     if (err) {
                         reject(err);
+                        connection.end();
+                    } else {
+                        console.log(`${res.title} added to the ${res.dept} department.`);
+                        wait_to_resolve(resolve);
                     }
-                    console.log(`${res.title} added to the ${res.dept} department.`);
-                    wait_to_resolve(resolve);
                 });
             });
         });
@@ -112,9 +114,11 @@ const add_department = (connection) => {
             (?)`, res.new_dept, (err, results) => {
                 if (err) {
                     reject(err);
+                    connection.end();
+                } else {
+                    console.log(`${res.new_dept} has been added as a department.`);
+                    wait_to_resolve(resolve);
                 }
-                console.log(`${res.new_dept} has been added as a department.`);
-                wait_to_resolve(resolve);
             });
         });
     });
