@@ -6,10 +6,10 @@ VALUES ("Engineering"),
 ("Finance"),
 ("Legal");
 
-INSERT INTO roles (title, dept_id)
-VALUES ("Engineer", 1),
-("Manager", 1),
-("Intern", 2);
+INSERT INTO roles (title, salary, dept_id)
+VALUES ("Engineer", 80000, 1),
+("Manager", 100000, 1),
+("Intern", 60000, 2);
 
 INSERT INTO employees (first_name, last_name, role_id, manager_id)
 VALUES ("Jordan", "Johnson", 2, NULL),

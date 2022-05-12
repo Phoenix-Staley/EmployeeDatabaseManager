@@ -52,8 +52,8 @@ const add_employee = (connection) => {
                                 (?,
                                 ?,
                                 (SELECT id FROM roles WHERE roles.title = ?),
-                                (SELECT id FROM employees AS e WHERE e.first_name = ?));`,
-                                [res.first_name, res.last_name, res.role, res.manager.split(" ")[0]],
+                                (SELECT id FROM employees AS e WHERE e.first_name = ? AND e.first_name = ?));`,
+                                [res.first_name, res.last_name, res.role, res.manager.split(" ")[0], res.manager.split(" ")[1]],
                                 (err, results) => {if (err) {reject(err)}});
                             }
                             console.log("Employee added to database!");
