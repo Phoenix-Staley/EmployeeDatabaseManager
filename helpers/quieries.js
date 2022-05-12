@@ -21,11 +21,28 @@ const view_all_emps = (connection) => {
                 reject(err);
             } else {
                 console.log();
-                console.table(res, ["id", "first", "last", "role", "department", "manager"]);
+                console.table(res, ["id", "first", "last", "role", "salary", "department", "manager"]);
             }
             wait_to_resolve(resolve);
         });
     });
 }
 
-module.exports = { view_all_emps, wait_to_resolve };
+const view_all_roles = (connection) => {
+    return new Promise((resolve, reject) => {
+        connection.query(`SELECT roles.id AS id, roles.title AS title, roles.salary AS salary,
+        departments.dept_name AS department
+        FROM roles
+        INNER JOIN departments ON roles.dept_id = departments.id`, (err, res) => {
+            if (err) {
+                reject(err);
+            } else {
+                console.log();
+                console.table(res, ["id", "title", "salary", "department"]);
+            }
+            wait_to_resolve(resolve);
+        });
+    })
+}
+
+module.exports = { view_all_emps, view_all_roles, wait_to_resolve };

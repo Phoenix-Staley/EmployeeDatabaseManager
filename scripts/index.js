@@ -58,6 +58,9 @@ function main() {
         } else if (choice.todo === "Add Employee") {
             inserts.add_employee(connection).catch(err => console.error(err))
             .then(res => main());
+        } else if (choice.todo === "View All Roles") {
+            queries.view_all_roles(connection)
+            .then(res => main());
         } else if (choice.todo === "Quit") {
             console.log("Goodbye");
             connection.end();
