@@ -75,6 +75,10 @@ function main() {
             sql.queries.view_all_departments(connection)
             .then(res => main());
 
+        } else if (choice.todo === "Add Department") {
+            sql.inserts.add_department(connection)
+            .then(res => main());
+
         } else if (choice.todo === "Quit") {
             console.log("Goodbye");
             connection.end();

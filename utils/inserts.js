@@ -81,22 +81,43 @@ const add_role = (connection) => {
             ])
             .then(res => {
                 connection.query(`INSERT INTO roles(title, salary, dept_id)
-                    VALUES
-                    (?, ?, (
-                        SELECT id FROM departments WHERE dept_name = ?
-                        )
-                    );`,
-                    [res.title, res.salary, res.dept],
-                    (err, result) => {
-                        if (err) {
-                            reject(err);
-                        }
-                        console.log(`${res.title} added to the ${res.dept} department.`);
-                        wait_to_resolve(resolve);
-                    });
+                VALUES
+                (?, ?, (
+                    SELECT id FROM departments WHERE dept_name = ?
+                    )
+                );`,
+                [res.title, res.salary, res.dept],
+                (err, result) => {
+                    if (err) {
+                        reject(err);
+                    }
+                    console.log(`${res.title} added to the ${res.dept} department.`);
+                    wait_to_resolve(resolve);
+                });
             });
         });
     });
 }
 
-module.exports = { add_employee, add_role };
+const add_department = (connection) => {
+    return new Promise((resolve, reject) => {
+        inquirer.prompt({
+            type: "input",
+            message: "What is the department name?",
+            name: "new_dept"
+        })
+        .then(res => {
+            connection.query(`INSERT INTO departments(dept_name)
+            VALUES
+            (?)`, res.new_dept, (err, results) => {
+                if (err) {
+                    reject(err);
+                }
+                console.log(`${res.new_dept} has been added as a department.`);
+                wait_to_resolve(resolve);
+            });
+        });
+    });
+}
+
+module.exports = { add_employee, add_role, add_department };
