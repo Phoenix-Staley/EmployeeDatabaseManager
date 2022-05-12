@@ -52,13 +52,16 @@ function main() {
     inquirer.prompt(main_options)
     .then((choice) => {
         if (choice.todo === "View All Employees") {
-            queries.view_all_emps(connection)
+            sql.queries.view_all_emps(connection)
             .then(res => main());
         } else if (choice.todo === "Add Employee") {
-            inserts.add_employee(connection).catch(err => console.error(err))
+            sql.inserts.add_employee(connection).catch(err => console.error(err))
             .then(res => main());
         } else if (choice.todo === "View All Roles") {
-            queries.view_all_roles(connection)
+            sql.queries.view_all_roles(connection)
+            .then(res => main());
+        } else if (choice.todo === "Update Employee Role") {
+            sql.updates.update_role(connection)
             .then(res => main());
         } else if (choice.todo === "Quit") {
             console.log("Goodbye");
