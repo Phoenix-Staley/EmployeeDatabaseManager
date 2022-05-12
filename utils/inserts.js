@@ -65,4 +65,50 @@ const add_employee = (connection) => {
     });
 }
 
-module.exports = { add_employee }
+const add_role = (connection) => {
+    return new Promise((resolve, reject) => {
+        let deptartments;
+        connection.query(`SELECT dept_name FROM departments`, (err, results) => {
+            if (err) {
+                reject(err);
+            }
+            deptartments = results.map(obj => obj.dept_name);
+            inquirer.prompt([
+                {
+                    type: "input",
+                    message: "What is the title of this role?",
+                    name: "title"
+                },
+                {
+                    type: "number",
+                    message: "What is the salary for this position?",
+                    name: "salary"
+                },
+                {
+                    type: "list",
+                    message: "What department is this in?",
+                    choices: deptartments,
+                    name: "dept"
+                }
+            ])
+            .then(res => {
+                connection.query(`INSERT INTO roles(title, salary, dept_id)
+                    VALUES
+                    (?, ?, (
+                        SELECT id FROM departments WHERE dept_name = ?
+                        )
+                    );`,
+                    [res.title, res.salary, res.dept],
+                    (err, result) => {
+                        if (err) {
+                            reject(err);
+                        }
+                        console.log(`${res.title} added to the ${res.dept} department.`);
+                        wait_to_resolve(resolve);
+                    });
+            });
+        });
+    });
+}
+
+module.exports = { add_employee, add_role };

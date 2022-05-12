@@ -54,15 +54,23 @@ function main() {
         if (choice.todo === "View All Employees") {
             sql.queries.view_all_emps(connection)
             .then(res => main());
+
         } else if (choice.todo === "Add Employee") {
             sql.inserts.add_employee(connection).catch(err => console.error(err))
             .then(res => main());
+
         } else if (choice.todo === "View All Roles") {
             sql.queries.view_all_roles(connection)
             .then(res => main());
+
         } else if (choice.todo === "Update Employee Role") {
             sql.updates.update_role(connection)
             .then(res => main());
+
+        } else if (choice.todo === "Add Role") {
+            sql.inserts.add_role(connection)
+            .then(res => main());
+            
         } else if (choice.todo === "Quit") {
             console.log("Goodbye");
             connection.end();
