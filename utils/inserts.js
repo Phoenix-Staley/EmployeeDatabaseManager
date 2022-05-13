@@ -9,12 +9,14 @@ const add_employee = (connection) => {
                 {
                     type: "input",
                     message: "Employee's first name:",
-                    name: "first_name"
+                    name: "first_name",
+                    validate: (ans) => ans.split(" ")[1] == undefined
                 },
                 {
                     type: "input",
                     message: "Employee's last name:",
-                    name: "last_name"
+                    name: "last_name",
+                    validate: (ans) => ans.split(" ")[1] == undefined
                 },
                 {
                     type: "list",
