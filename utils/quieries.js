@@ -10,6 +10,24 @@ const wait_to_resolve = (resolve) => {
     .then(res => resolve());
 }
 
+const get_roles_emps = (reject, connection, cb) => {
+    let roles;
+    let emps;
+    connection.query(`SELECT title AS role, dept_id FROM roles`, (err, saved_roles) => {
+        if (err) {
+            reject(err);
+        }
+        roles = saved_roles.map(obj => obj.role);
+        connection.query(`SELECT first_name AS first, last_name AS last FROM employees`, (err, saved_emps) => {
+            if (err) {
+                reject(err);
+            }
+            emps = saved_emps.map(obj => obj.first + " " + obj.last)
+            cb(roles, emps);
+        });
+    });
+}
+
 const view_all_emps = (connection) => {
     return new Promise((resolve, reject) => {
         connection.query(`SELECT employees.id AS ID, employees.first_name AS First, employees.last_name AS Last,
@@ -54,24 +72,6 @@ const view_all_departments = (connection) => {
             wait_to_resolve(resolve);
         });
     })
-}
-
-const get_roles_emps = (reject, connection, cb) => {
-    let roles;
-    let emps;
-    connection.query(`SELECT title AS role, dept_id FROM roles`, (err, saved_roles) => {
-        if (err) {
-            reject(err);
-        }
-        roles = saved_roles.map(obj => obj.role);
-        connection.query(`SELECT first_name AS first, last_name AS last FROM employees`, (err, saved_emps) => {
-            if (err) {
-                reject(err);
-            }
-            emps = saved_emps.map(obj => obj.first + " " + obj.last)
-            cb(roles, emps);
-        });
-    });
 }
 
 module.exports = { view_all_emps, view_all_roles, view_all_departments, get_roles_emps, wait_to_resolve };
