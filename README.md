@@ -28,7 +28,7 @@ Once you have done all of the above, run `npm start` from anywhere within the co
 
 ## Usage with Examples
 Click on the image below to watch a tutorial on how to install and run this application.
-[![Pink database symbol with the title "Database Manger"](https://img.youtube.com/vi/0nOrqkHtugU/0.jpg)](https://youtu.be/0nOrqkHtugU)
+[![Pink database symbol with the title "Database Manger"](https://img.youtube.com/vi/7tnG5UapSU8/0.jpg)](https://youtu.be/7tnG5UapSU8)
 
 ## Features
 
