@@ -1,3 +1,5 @@
+// This file has all the functions required to add employees, roles, and departments
+
 const { get_roles_emps, wait_to_resolve } = require("./quieries");
 const inquirer = require("inquirer");
 

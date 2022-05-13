@@ -1,28 +1,22 @@
 const mysql = require("mysql2");
 const inquirer = require("inquirer");
 const sql = require("./utils");
-// const schema = require("../db/schema.sql");
-// console.log(schema);
 let connection;
 
 const handle_err = err => {
     console.error("There's been an error:", err);
 }
 
+// Defines the connection to the sql database using the user made in schema.sql
 connection = mysql.createConnection({
     host: "localhost",
     user: "employee",
     password: "",
     database: "company_db"
 });
+connection.connect();
 
-// connection.query('SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = "company_db"', (err, results) => {
-//     if (!results[0]) {
-//         throw "It seems you do not have a database set up. Please run schema.sql and seeds.sql";
-//     } else {
-//         connection.query("USE company_db");
-//     }
-// });
+// The list of actions the user can choose to do
 const main_options = [
     {
         type: "list",
@@ -34,24 +28,19 @@ const main_options = [
     }
 ];
 
-connection.connect();
-// connection.execute(`IF NOT EXISTS(SELECT * FROM sys.databases WHERE name = "company")
-//     BEGIN
-//         CREATE DATABASE company
-//         USE company
-//     END`);
-
+// Prints the program title
 console.log(String.raw`
- ______                 _                          _____  ____     __  __                                   
-|  ____|               | |                        |  __ \|  _ \   |  \/  |                                  
-| |__   _ __ ___  _ __ | | ___  _   _  ___  ___   | |  | | |_) |  | \  / | __ _ _ __   __ _  __ _  ___ _ __ 
-|  __| | '_ \ _ \| '_ \| |/ _ \| | | |/ _ \/ _ \  | |  | |  _ <   | |\/| |/ _\ | '_ \ / _\ |/ _\ |/ _ | '__|
-| |____| | | | | | |_) | | (_) | |_| |  __|  __/  | |__| | |_) |  | |  | | (_| | | | | (_| | (_| |  __| |   
-|______|_| |_| |_| .__/|_|\___/ \__, |\___|\___|  |_____/|____/   |_|  |_|\__,_|_| |_|\__,_|\__, |\___|_|   
-                 | |             __/ |                                                       __/ |          
-                 |_|            |___/                                                       |___/           
+  _____                                          _____  ____    __  __                                   
+ / ____|                                        |  __ \|  _ \  |  \/  |                                  
+| |     ___  _ __ ___  _ __   __ _ _ __  _   _  | |  | | |_) | | \  / | __ _ _ __   __ _  __ _  ___ _ __ 
+| |    / _ \| '_ \ _ \| '_ \ / _\ | '_ \| | | | | |  | |  _ <  | |\/| |/ _\ | '_ \ / _\ |/ _\ |/ _ \ '__|
+| |___| (_) | | | | | | |_) | (_| | | | | |_| | | |__| | |_) | | |  | | (_| | | | | (_| | (_| |  __/ |   
+ \_____\___/|_| |_| |_| .__/ \__,_|_| |_|\__, | |_____/|____/  |_|  |_|\__,_|_| |_|\__,_|\__, |\___|_|   
+                     | |                 __/ |                                           __/ |          
+                     |_|                |___/                                           |___/           
 `);
 
+// The main function that displays the options and responds accordingly for each choice
 function main() {
     inquirer.prompt(main_options)
     .then((res) => {
@@ -113,4 +102,5 @@ function main() {
     });
 }
 
+// Starts the main function
 main();
