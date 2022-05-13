@@ -11,6 +11,8 @@
 
 - [Features](#Features)
 
+- [Usage with Examples](#Usage)
+
 - [Contribute](#Contribute)
 
 ## Description
@@ -21,8 +23,12 @@ This code could be re-used in the future to manage another type of database. Als
 > Note: To install this app, first make sure you have [node.js](https://nodejs.org/it/download/) and [mysql](https://dev.mysql.com/downloads/installer/) installed.
 To check this, run `node -v`, and `mysql -V` in a command prompt.
 
-Once the above programs are installed, clone the github repository and navigate to the company_data_hub/ directory. After that, run `npm i` to install all it's dependencies. Once that's done, navigate to the db/ directory. Run `mysql -u root -p` and enter your mysql password. Then you can run `source schema.sql` to create the database, and `source schema.sql` for some generic starting data. You will be able to delete any data you don't want later.
+Once the above programs are installed, clone the github repository and navigate to the company_data_hub/ directory. After that, run `npm i` to install all it's dependencies. Once that's done, navigate to the db/ directory. Run `mysql -u root -p` and enter your mysql password. Then you can run `source schema.sql` to create the database, and `source seeds.sql` for some generic starting data. You will be able to delete any data you don't want later.
 Once you have done all of the above, run `npm start` from anywhere within the company_data_hub/ directory to start the app.
+
+## Usage with Examples
+Click on the image below to watch a tutorial on how to install and run this application.
+[![Pink database symbol with the title "Database Manger"](https://img.youtube.com/vi/0nOrqkHtugU/0.jpg)](https://youtu.be/0nOrqkHtugU)
 
 ## Features
 
