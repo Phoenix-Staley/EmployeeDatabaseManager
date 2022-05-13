@@ -21,7 +21,7 @@ const main_options = [
     {
         type: "list",
         message: "What would you like to do?",
-        choices: ["View All Employees", "View All Departments", "View All Roles",
+        choices: ["View All Employees", "View All Departments", "View All Roles", "View Total Utilized Budget",
         "Add Employee", "Update Employee Role", "Add Role", "Add Department",
         "Delete Role", "Delete Employee", "Delete Department", "Quit"],
         name: "todo"
@@ -57,6 +57,11 @@ function main() {
 
         } else if (choice === "View All Departments") {
             sql.queries.view_all_departments(connection)
+            .then(res => main())
+            .catch(err => handle_err(err));
+
+        } else if (choice === "View Total Utilized Budget") {
+            sql.queries.view_dept_budget(connection)
             .then(res => main())
             .catch(err => handle_err(err));
 
