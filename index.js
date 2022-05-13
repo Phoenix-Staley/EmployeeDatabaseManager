@@ -27,8 +27,9 @@ const main_options = [
     {
         type: "list",
         message: "What would you like to do?",
-        choices: ["View All Employees", "Add Employee", "Update Employee Role", "Delete Employee",
-        "View All Roles", "Add Role", "Delete Role", "View All Departments", "Add Department", "Quit"],
+        choices: ["View All Employees", "View All Departments", "View All Roles",
+        "Add Employee", "Update Employee Role", "Add Role", "Add Department",
+        "Delete Role", "Delete Employee", "Delete Department", "Quit"],
         name: "todo"
     }
 ];
@@ -60,6 +61,16 @@ function main() {
             .then(res => main())
             .catch(err => handle_err(err));
 
+        } else if (choice === "View All Roles") {
+            sql.queries.view_all_roles(connection)
+            .then(res => main())
+            .catch(err => handle_err(err));
+
+        } else if (choice === "View All Departments") {
+            sql.queries.view_all_departments(connection)
+            .then(res => main())
+            .catch(err => handle_err(err));
+
         } else if (choice === "Add Employee") {
             sql.inserts.add_employee(connection).catch(err => console.error(err))
             .then(res => main())
@@ -70,20 +81,10 @@ function main() {
             .then(res => main())
             .catch(err => handle_err(err));
 
-        } else if (choice === "View All Roles") {
-            sql.queries.view_all_roles(connection)
-            .then(res => main())
-            .catch(err => handle_err(err));
-
         } else if (choice === "Add Role") {
             sql.inserts.add_role(connection)
             .then(res => main())
             .catch(err => console.error("Error: make sure the role's name is unique."));
-
-        } else if (choice === "View All Departments") {
-            sql.queries.view_all_departments(connection)
-            .then(res => main())
-            .catch(err => handle_err(err));
 
         } else if (choice === "Add Department") {
             sql.inserts.add_department(connection)
