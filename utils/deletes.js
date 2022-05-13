@@ -1,6 +1,6 @@
 // This file has all the functions to delete employees, roles, and departments
 
-const { get_roles_emps, wait_to_resolve } = require("./quieries");
+const { get_depts, get_roles_emps, wait_to_resolve } = require("./quieries");
 const inquirer = require("inquirer");
 
 const delete_employee = (connection) => {
@@ -53,29 +53,23 @@ const delete_role = (connection) => {
 
 const delete_department = (connection) => {
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT dept_name FROM departments`, (err, res) => {
-            if (err) {
-                reject(err);
-            } else {
-                // Creates an array of department names
-                departments = res.map(obj => obj.dept_name);
-                inquirer.prompt([
-                    {
-                        type: "list",
-                        message: "Which department would you like to delete?",
-                        choices: departments,
-                        name: "dept"
-                    }
-                ])
-                .then(res => {
-                    connection.query(`DELETE FROM departments
-                        WHERE dept_name = ?`,
-                        res.dept,
-                        (err, results) => {if (err) {reject(err)}});
-                    console.log(`${res.dept} deleted from database.`);
-                    wait_to_resolve(resolve);
-                });
-            }
+        get_depts(reject, connection, (depts) => {
+            inquirer.prompt([
+                {
+                    type: "list",
+                    message: "Which department would you like to delete?",
+                    choices: departments,
+                    name: "dept"
+                }
+            ])
+            .then(res => {
+                connection.query(`DELETE FROM departments
+                    WHERE dept_name = ?`,
+                    res.dept,
+                    (err, results) => {if (err) {reject(err)}});
+                console.log(`${res.dept} deleted from database.`);
+                wait_to_resolve(resolve);
+            });
         });
     });
 }

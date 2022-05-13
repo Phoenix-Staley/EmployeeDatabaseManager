@@ -1,5 +1,5 @@
 // This file has the functions to select and view different tables
-// This also has the wait_to_resolve and get_roles_emps functions that are used in the other utils
+// This also has the wait_to_resolve, get_depts, and get_roles_emps functions that are used in the other utils
 
 const inquirer = require("inquirer");
 
@@ -30,6 +30,18 @@ const get_roles_emps = (reject, connection, cb) => {
             emps = saved_emps.map(obj => obj.first + " " + obj.last)
             cb(roles, emps);
         });
+    });
+}
+
+const get_depts = (reject, connection, cb) => {
+    connection.query(`SELECT dept_name FROM departments`, (err, res) => {
+        if (err) {
+            reject(err);
+        } else {
+            // Creates an array of department names
+            departments = res.map(obj => obj.dept_name)
+            cb(departments);
+        }
     });
 }
 
@@ -79,4 +91,33 @@ const view_all_departments = (connection) => {
     })
 }
 
-module.exports = { view_all_emps, view_all_roles, view_all_departments, get_roles_emps, wait_to_resolve };
+// Displays the sum of all employee salaries in a chosen department 
+const view_dept_budget = (connection) => {
+    return new Promise((resolve, reject) => {
+        get_depts(reject, connection, (depts) => {
+            inquirer.prompt([{
+                type: "list",
+                message: "Which department's salary budget would you like to view?",
+                choices: depts,
+                name: "dept_name"
+            }])
+            .then(res => {
+                connection.query(`SELECT SUM(Salary) AS sum FROM (SELECT employees.id AS ID,
+                    roles.salary AS Salary, departments.dept_name AS Department
+                    FROM employees
+                    LEFT JOIN roles ON employees.role_id = roles.id
+                    LEFT JOIN departments ON roles.dept_id = departments.id) AS emps WHERE Department = ?`,
+                    res.dept_name, (err, results) => {
+                        if (err) {
+                            reject(err);
+                        } else {
+                            console.log(`The sum of all salaries in teh ${res.dept_name} department is $${results[0].sum}.`);
+                        }
+                        wait_to_resolve(resolve);
+                    });
+            });
+        });
+    });
+}
+
+module.exports = { view_all_emps, view_all_roles, view_all_departments, view_dept_budget, get_roles_emps, get_depts, wait_to_resolve };

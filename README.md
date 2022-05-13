@@ -33,6 +33,7 @@ Click on the image below to watch a tutorial on how to install and run this appl
 ## Features
 
 - View all employees, roles, and departments alongside their relevent information.
+- View a department's total utilized budget (sum of all employee salaries).
 - Add a new employee, role, or department by answering a few simple questions.
 - Update an employee's role if their position changes.
 - Delete any employee, role, or department you no longer need in your database.
