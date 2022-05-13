@@ -1,3 +1,5 @@
+// This file has the function to update an employee's role
+
 const { get_roles_emps, wait_to_resolve } = require("./quieries");
 const inquirer = require("inquirer");
 

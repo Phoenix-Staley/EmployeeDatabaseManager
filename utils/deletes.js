@@ -1,3 +1,5 @@
+// This file has all the functions to delete employees, roles, and departments
+
 const { get_roles_emps, wait_to_resolve } = require("./quieries");
 const inquirer = require("inquirer");
 
@@ -18,7 +20,7 @@ const delete_employee = (connection) => {
                     WHERE first_name = ?
                     AND last_name = ?`,
                     [emp_name[0], emp_name[1]],
-                    (err, results) => {if (err) {reject(err)} else {console.log("Results: ", results)}});
+                    (err, results) => {if (err) {reject(err)}});
                 console.log(`${res.emp_name} deleted from database.`);
                 wait_to_resolve(resolve);
             });
@@ -55,6 +57,7 @@ const delete_department = (connection) => {
             if (err) {
                 reject(err);
             } else {
+                // Creates an array of department names
                 departments = res.map(obj => obj.dept_name);
                 inquirer.prompt([
                     {

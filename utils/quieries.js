@@ -1,5 +1,9 @@
+// This file has the functions to select and view different tables
+// This also has the wait_to_resolve and get_roles_emps functions that are used in the other utils
+
 const inquirer = require("inquirer");
 
+// Waits for user input before resolving the given promise
 const wait_to_resolve = (resolve) => {
     inquirer.prompt([{
         type: "list",
@@ -10,6 +14,7 @@ const wait_to_resolve = (resolve) => {
     .then(res => resolve());
 }
 
+// Queries the roles and employees tables and passes it to the callback function
 const get_roles_emps = (reject, connection, cb) => {
     let roles;
     let emps;
