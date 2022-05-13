@@ -101,6 +101,11 @@ function main() {
             .then(res => main())
             .catch(err => handle_err(err));
 
+        } else if (choice === "Delete Department") {
+            sql.deletes.delete_department(connection)
+            .then(res => main())
+            .catch(err => handle_err(err));
+
         } else if (choice === "Quit") {
             console.log("Goodbye");
             connection.end();

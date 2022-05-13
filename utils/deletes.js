@@ -14,12 +14,12 @@ const delete_employee = (connection) => {
             ])
             .then(res => {
                 emp_name = res.emp_name.split(" ");
-                    connection.query(`DELETE FROM employees
+                connection.query(`DELETE FROM employees
                     WHERE first_name = ?
                     AND last_name = ?`,
-                    [emp_name[0], emp_name[0]],
-                    (err, results) => {if (err) {reject(err)}});
-                console.log(`${res.first_name} ${res.last_name} deleted from database.`);
+                    [emp_name[0], emp_name[1]],
+                    (err, results) => {if (err) {reject(err)} else {console.log("Results: ", results)}});
+                console.log(`${res.emp_name} deleted from database.`);
                 wait_to_resolve(resolve);
             });
         });
@@ -49,4 +49,32 @@ const delete_role = (connection) => {
     });
 }
 
-module.exports = { delete_employee, delete_role };
+const delete_department = (connection) => {
+    return new Promise((resolve, reject) => {
+        connection.query(`SELECT dept_name FROM departments`, (err, res) => {
+            if (err) {
+                reject(err);
+            } else {
+                departments = res.map(obj => obj.dept_name);
+                inquirer.prompt([
+                    {
+                        type: "list",
+                        message: "Which department would you like to delete?",
+                        choices: departments,
+                        name: "dept"
+                    }
+                ])
+                .then(res => {
+                    connection.query(`DELETE FROM departments
+                        WHERE dept_name = ?`,
+                        res.dept,
+                        (err, results) => {if (err) {reject(err)}});
+                    console.log(`${res.dept} deleted from database.`);
+                    wait_to_resolve(resolve);
+                });
+            }
+        });
+    });
+}
+
+module.exports = { delete_employee, delete_role, delete_department };
