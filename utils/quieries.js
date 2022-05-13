@@ -63,7 +63,7 @@ const view_all_roles = (connection) => {
 
 const view_all_departments = (connection) => {
     return new Promise((resolve, reject) => {
-        connection.query(`SELECT id, dept_name AS Department FROM departments`, (err, res) => {
+        connection.query(`SELECT id AS ID, dept_name AS Department FROM departments`, (err, res) => {
             if (err) {
                 reject(err);
             }
