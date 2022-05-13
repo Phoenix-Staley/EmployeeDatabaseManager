@@ -5,6 +5,10 @@ const sql = require("./utils");
 // console.log(schema);
 let connection;
 
+const handle_err = err => {
+    console.error("There's been an error:", err);
+}
+
 connection = mysql.createConnection({
     host: "localhost",
     user: "employee",
@@ -24,7 +28,7 @@ const main_options = [
         type: "list",
         message: "What would you like to do?",
         choices: ["View All Employees", "Add Employee", "Update Employee Role",
-        "View All Roles", "Add Role", "View All Departments", "Add Department", "Quit"],
+        "View All Roles", "Add Role", "View All Departments", "Add Department", "Delete Employee", "Quit"],
         name: "todo"
     }
 ];
@@ -53,22 +57,22 @@ function main() {
         if (choice.todo === "View All Employees") {
             sql.queries.view_all_emps(connection)
             .then(res => main())
-            .catch(err => console.error("There's been an error:", err));
+            .catch(err => handle_err(err));
 
         } else if (choice.todo === "Add Employee") {
             sql.inserts.add_employee(connection).catch(err => console.error(err))
             .then(res => main())
-            .catch(err => console.error("There's been an error:", err));
+            .catch(err => handle_err(err));
 
         } else if (choice.todo === "Update Employee Role") {
             sql.updates.update_role(connection)
             .then(res => main())
-            .catch(err => console.error("There's been an error:", err));
+            .catch(err => handle_err(err));
 
         } else if (choice.todo === "View All Roles") {
             sql.queries.view_all_roles(connection)
             .then(res => main())
-            .catch(err => console.error("There's been an error:", err));
+            .catch(err => handle_err(err));
 
         } else if (choice.todo === "Add Role") {
             sql.inserts.add_role(connection)
@@ -78,12 +82,17 @@ function main() {
         } else if (choice.todo === "View All Departments") {
             sql.queries.view_all_departments(connection)
             .then(res => main())
-            .catch(err => console.error("There's been an error:", err));
+            .catch(err => handle_err(err));
 
         } else if (choice.todo === "Add Department") {
             sql.inserts.add_department(connection)
             .then(res => main())
             .catch(err => console.error("Error: make sure the department's name is unique."));
+
+        } else if (choice.todo === "Delete Employee") {
+            sql.deletes.delete_employee(connection)
+            .then(res => main())
+            .catch(err => console.error(err));
 
         } else if (choice.todo === "Quit") {
             console.log("Goodbye");

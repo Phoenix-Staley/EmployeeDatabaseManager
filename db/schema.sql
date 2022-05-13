@@ -13,7 +13,7 @@ CREATE TABLE roles (
     title VARCHAR(31) NOT NULL UNIQUE,
     salary INT NOT NULL,
     dept_id INT,
-    FOREIGN KEY (dept_id) REFERENCES departments(id)
+    FOREIGN KEY (dept_id) REFERENCES departments(id) ON DELETE SET NULL
 );
 
 CREATE TABLE employees (
@@ -22,8 +22,8 @@ CREATE TABLE employees (
     last_name VARCHAR(63) NOT NULL,
     role_id INT,
     manager_id INT,
-    FOREIGN KEY (role_id) REFERENCES roles(id),
-    FOREIGN KEY (manager_id) REFERENCES employees(id)
+    FOREIGN KEY (role_id) REFERENCES roles(id) ON DELETE SET NULL,
+    FOREIGN KEY (manager_id) REFERENCES employees(id) ON DELETE SET NULL
 );
 
 DROP USER IF EXISTS "employee"@"localhost";
