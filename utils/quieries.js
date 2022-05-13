@@ -33,8 +33,8 @@ const view_all_emps = (connection) => {
         connection.query(`SELECT employees.id AS ID, employees.first_name AS First, employees.last_name AS Last,
         employees.manager_id AS Manager_ID, roles.title AS Role, roles.salary AS Salary, departments.dept_name AS Department
         FROM employees
-        INNER JOIN roles ON employees.role_id = roles.id
-        INNER JOIN departments ON roles.dept_id = departments.id`, (err, res) => {
+        LEFT JOIN roles ON employees.role_id = roles.id
+        LEFT JOIN departments ON roles.dept_id = departments.id`, (err, res) => {
             if (err) {
                 reject(err);
             }

@@ -27,8 +27,8 @@ const main_options = [
     {
         type: "list",
         message: "What would you like to do?",
-        choices: ["View All Employees", "Add Employee", "Update Employee Role",
-        "View All Roles", "Add Role", "View All Departments", "Add Department", "Delete Employee", "Quit"],
+        choices: ["View All Employees", "Add Employee", "Update Employee Role", "Delete Employee",
+        "View All Roles", "Add Role", "Delete Role", "View All Departments", "Add Department", "Quit"],
         name: "todo"
     }
 ];
@@ -53,48 +53,54 @@ console.log(String.raw`
 
 function main() {
     inquirer.prompt(main_options)
-    .then((choice) => {
-        if (choice.todo === "View All Employees") {
+    .then((res) => {
+        choice = res.todo
+        if (choice === "View All Employees") {
             sql.queries.view_all_emps(connection)
             .then(res => main())
             .catch(err => handle_err(err));
 
-        } else if (choice.todo === "Add Employee") {
+        } else if (choice === "Add Employee") {
             sql.inserts.add_employee(connection).catch(err => console.error(err))
             .then(res => main())
             .catch(err => handle_err(err));
 
-        } else if (choice.todo === "Update Employee Role") {
+        } else if (choice === "Update Employee Role") {
             sql.updates.update_role(connection)
             .then(res => main())
             .catch(err => handle_err(err));
 
-        } else if (choice.todo === "View All Roles") {
+        } else if (choice === "View All Roles") {
             sql.queries.view_all_roles(connection)
             .then(res => main())
             .catch(err => handle_err(err));
 
-        } else if (choice.todo === "Add Role") {
+        } else if (choice === "Add Role") {
             sql.inserts.add_role(connection)
             .then(res => main())
             .catch(err => console.error("Error: make sure the role's name is unique."));
 
-        } else if (choice.todo === "View All Departments") {
+        } else if (choice === "View All Departments") {
             sql.queries.view_all_departments(connection)
             .then(res => main())
             .catch(err => handle_err(err));
 
-        } else if (choice.todo === "Add Department") {
+        } else if (choice === "Add Department") {
             sql.inserts.add_department(connection)
             .then(res => main())
             .catch(err => console.error("Error: make sure the department's name is unique."));
 
-        } else if (choice.todo === "Delete Employee") {
+        } else if (choice === "Delete Employee") {
             sql.deletes.delete_employee(connection)
             .then(res => main())
-            .catch(err => console.error(err));
+            .catch(err => handle_err(err));
 
-        } else if (choice.todo === "Quit") {
+        } else if (choice === "Delete Role") {
+            sql.deletes.delete_role(connection)
+            .then(res => main())
+            .catch(err => handle_err(err));
+
+        } else if (choice === "Quit") {
             console.log("Goodbye");
             connection.end();
         }
